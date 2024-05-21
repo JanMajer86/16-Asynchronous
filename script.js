@@ -43,6 +43,7 @@ getCountryData('spain');
 getCountryData('usa');
 getCountryData('czech republic');
 */
+/*
 
 const renderCountry = function (data, className = '') {
   const html = `
@@ -93,3 +94,16 @@ const getCountryAndNeighbour = function (country) {
 };
 
 getCountryAndNeighbour('usa');
+*/
+
+// const request = new XMLHttpRequest();
+// request.open(
+//   'GET',
+//   `https://countries-api-836d.onrender.com/countries/name/${country}`
+// );
+// request.send();
+
+const request = fetch(
+  `https://countries-api-836d.onrender.com/countries/name/spain`
+);
+console.log(request);
