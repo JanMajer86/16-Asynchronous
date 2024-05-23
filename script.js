@@ -136,21 +136,31 @@ const getCountryData = function (country) {
 // CONSUMING PROMISES // callback without callback hell
 // FLAT CHAIN OF PROMISES
 
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  countriesContainer.style.opacity = 1;
+};
+
 const getCountryData = function (country) {
   // Country 1
   fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`)
     .then(response => response.json())
     .then(data => {
       renderCountry(data[0]);
-      const neighbour = data[0].borders?.[0];
+      const neighbour = data[0].borders;
+      if (neighbour.length === 0) return;
       // Country 2
       return fetch(
-        `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`
+        `https://countries-api-836d.onrender.com/countries/alpha/${neighbour[0]}`
       );
     })
     .then(response => response.json())
-    .then(data => renderCountry(data, 'neighbour'));
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => console.error(`${err} 🤬🤬🤬 `));
 };
 
+btn.addEventListener('click', function () {
+  getCountryData('germany');
+});
+
 // getCountryData('spain');
-getCountryData('germany');
